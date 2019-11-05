@@ -1,0 +1,75 @@
+﻿<Window x:Class="HttpTestServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HttpTestServer"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="Http Test Server"
+        Height="450"
+        Width="800"
+        d:DataContext="{d:DesignInstance local:MainWindow}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Items}"
+                  SelectedItem="{Binding SelectedItem}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Timestamp"
+                                    Binding="{Binding Timestamp}" />
+                <DataGridTextColumn Header="Method"
+                                    Binding="{Binding Method}" />
+                <DataGridTextColumn Header="Type"
+                                    Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Url"
+                                    Binding="{Binding Url}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="1"
+                  Grid.Column="0"
+                  ItemsSource="{Binding SelectedItem.Attachments}"
+                  SelectedItem="{Binding SelectedAttachment}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File name"
+                                    Binding="{Binding FileName}" />
+                <DataGridTextColumn Header="Type"
+                                    Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <avalonedit:TextEditor Grid.Row="0"
+                               Grid.Column="1"
+                               Document="{Binding SelectedItemContent}"
+                               VerticalScrollBarVisibility="Auto"
+                               WordWrap="True"
+                               BorderBrush="Gray"
+                               BorderThickness="1" />
+        <Image Grid.Row="1"
+               Grid.Column="1"
+               Source="{Binding SelectedAttachment.Image}"
+               Visibility="{Binding SelectedAttachment.IsImage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <avalonedit:TextEditor Grid.Row="1"
+                               Grid.Column="1"
+                               Document="{Binding SelectedAttachmentContent}"
+                               VerticalScrollBarVisibility="Auto"
+                               WordWrap="True"
+                               Visibility="{Binding SelectedAttachment.IsText, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Grid>
+</Window>
