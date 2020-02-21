@@ -1,6 +1,12 @@
 # HTTP Test Server
 
-POST multipart/form-data is currently only displayed as either text or as an image. And the request's content is always only displayed as text.
+An HTTP server that saves incoming requests and displays their data.
+
+Limitations:
+
+* It is hard-coded to listen to port 9191.
+* The request's content is only displayed as text.
+* POST multipart/form-data is only displayed as either text or as an image.
 
 ## Screenshots
 
